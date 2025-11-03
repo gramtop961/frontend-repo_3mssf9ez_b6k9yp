@@ -1,28 +1,43 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
+import HeroSplineCover from './components/HeroSplineCover';
+import TripCategoryGrid from './components/TripCategoryGrid';
+import LocationSelector from './components/LocationSelector';
+import FeaturedTrips from './components/FeaturedTrips';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <div className="min-h-screen w-full bg-neutral-950 text-white">
+      {/* Hero with interactive Spline */}
+      <HeroSplineCover />
+
+      {/* Filters: category + location */}
+      <TripCategoryGrid onSelect={(key) => setSelectedCategory(key)} />
+      <div className="mb-2" />
+      <LocationSelector
+        selected={selectedLocation}
+        onChange={(loc) => setSelectedLocation(loc)}
+      />
+
+      {/* Results */}
+      <FeaturedTrips
+        selectedLocation={selectedLocation}
+        selectedCategory={selectedCategory}
+      />
+
+      {/* Footer */}
+      <footer className="mx-auto max-w-7xl px-6 pb-12 text-sm text-white/60">
+        <div className="border-t border-white/10 pt-6">
+          <p>
+            © {new Date().getFullYear()} I GO BOAT. Made for island lovers. Secure
+            payments. Local operators.
+          </p>
         </div>
-      </div>
+      </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
